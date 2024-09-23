@@ -4,55 +4,68 @@ import com.corndel.chessington.model.pieces.*;
 
 public class Board {
 
-  public static final int BOARD_SIZE = 8;
+    public static final int BOARD_SIZE = 8;
 
-  private Piece[][] board = new Piece[BOARD_SIZE][BOARD_SIZE];
+    private Piece[][] board = new Piece[BOARD_SIZE][BOARD_SIZE];
 
-  private Board() {}
-
-  public static Board forNewGame() {
-    Board board = new Board();
-    board.setBackRow(0, PlayerColour.BLACK);
-    board.setBackRow(7, PlayerColour.WHITE);
-
-    for (int col = 0; col < BOARD_SIZE; col++) {
-      board.board[1][col] = new Pawn(PlayerColour.BLACK);
-      board.board[6][col] = new Pawn(PlayerColour.WHITE);
+    private Board() {
     }
 
-    return board;
-  }
+    public static Board forNewGame() {
+        Board board = new Board();
+        board.setBackRow(0, PlayerColour.BLACK);
+        board.setBackRow(7, PlayerColour.WHITE);
 
-  public Piece[][] getBoard() {
-    return board;
-  }
+        for (int col = 0; col < BOARD_SIZE; col++) {
+            board.board[1][col] = new Pawn(PlayerColour.BLACK);
+            board.board[6][col] = new Pawn(PlayerColour.WHITE);
+        }
 
-  public static Board empty() {
-    return new Board();
-  }
+        return board;
+    }
 
-  private void setBackRow(int rowIndex, PlayerColour colour) {
-    board[rowIndex][0] = new Rook(colour);
-    board[rowIndex][1] = new Knight(colour);
-    board[rowIndex][2] = new Bishop(colour);
-    board[rowIndex][3] = new Queen(colour);
-    board[rowIndex][4] = new King(colour);
-    board[rowIndex][5] = new Bishop(colour);
-    board[rowIndex][6] = new Knight(colour);
-    board[rowIndex][7] = new Rook(colour);
-  }
+    public Piece[][] getBoard() {
+        return board;
+    }
 
-  public Piece get(Coordinates coords) {
-    return board[coords.getRow()][coords.getCol()];
-  }
+    public static Board empty() {
+        return new Board();
+    }
 
-  public void move(Coordinates from, Coordinates to) {
-    Piece piece = board[from.getRow()][from.getCol()];
-    board[to.getRow()][to.getCol()] = piece;
-    board[from.getRow()][from.getCol()] = null;
-  }
+    private void setBackRow(int rowIndex, PlayerColour colour) {
+        board[rowIndex][0] = new Rook(colour);
+        board[rowIndex][1] = new Knight(colour);
+        board[rowIndex][2] = new Bishop(colour);
+        board[rowIndex][3] = new Queen(colour);
+        board[rowIndex][4] = new King(colour);
+        board[rowIndex][5] = new Bishop(colour);
+        board[rowIndex][6] = new Knight(colour);
+        board[rowIndex][7] = new Rook(colour);
+    }
 
-  public void placePiece(Coordinates coords, Piece piece) {
-    board[coords.getRow()][coords.getCol()] = piece;
-  }
+    public Piece get(Coordinates coords) {
+        return board[coords.getRow()][coords.getCol()];
+    }
+
+    public void move(Coordinates from, Coordinates to) {
+        Piece piece = board[from.getRow()][from.getCol()];
+        board[to.getRow()][to.getCol()] = piece;
+        board[from.getRow()][from.getCol()] = null;
+    }
+
+    public void placePiece(Coordinates coords, Piece piece) {
+        board[coords.getRow()][coords.getCol()] = piece;
+    }
+
+    public boolean onBoard(Coordinates coordinates) {
+        return coordinates.getCol() < BOARD_SIZE
+                && coordinates.getCol() >= 0
+                && coordinates.getRow() < BOARD_SIZE
+                && coordinates.getRow() >= 0;
+    }
+
+    public boolean canTake(Coordinates coordinates, PlayerColour colour) {
+        return get(coordinates) != null && get(coordinates).getColour() != colour;
+    }
+
 }
