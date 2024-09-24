@@ -1,4 +1,4 @@
-package com.corndel;
+package com.corndel.sandbox;
 
 class Cat {
     private String colour;
@@ -23,7 +23,7 @@ class Cat {
     }
 }
 
-public class Sandbox {
+public class Sandbox1 {
     public static void main(String[] args) {
         Cat c1 = new Cat("Black");
         Cat c2 = new Cat("Black");
