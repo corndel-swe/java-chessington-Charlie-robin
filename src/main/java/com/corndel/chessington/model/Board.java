@@ -57,15 +57,31 @@ public class Board {
         board[coords.getRow()][coords.getCol()] = piece;
     }
 
-    public boolean onBoard(Coordinates coordinates) {
-        return coordinates.getCol() < BOARD_SIZE
-                && coordinates.getCol() >= 0
-                && coordinates.getRow() < BOARD_SIZE
-                && coordinates.getRow() >= 0;
+    public boolean isCoordinateOffBoard(Coordinates coordinates) {
+        return coordinates.getCol() >= Board.BOARD_SIZE
+                || coordinates.getCol() < 0
+                || coordinates.getRow() >= Board.BOARD_SIZE
+                || coordinates.getRow() < 0;
     }
 
     public boolean canTake(Coordinates coordinates, PlayerColour colour) {
         return get(coordinates) != null && get(coordinates).getColour() != colour;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+
+        for(Piece[] pieces : board){
+
+            for(Piece piece : pieces){
+                builder.append(piece);
+            }
+            builder.append("\n");
+        }
+
+        return "Board{" +
+                "board=" + builder +
+                '}';
+    }
 }

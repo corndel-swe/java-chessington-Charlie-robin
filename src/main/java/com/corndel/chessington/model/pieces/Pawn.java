@@ -5,35 +5,14 @@ import com.corndel.chessington.model.Coordinates;
 import com.corndel.chessington.model.Move;
 import com.corndel.chessington.model.PlayerColour;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class Pawn implements Piece {
-
-    private final Piece.PieceType type;
-    protected final PlayerColour colour;
+public class Pawn extends AbstractPiece {
 
     public Pawn(PlayerColour colour) {
-        this.type = PieceType.PAWN;
-        this.colour = colour;
-    }
-
-    @Override
-    public Piece.PieceType getType() {
-        return type;
-    }
-
-    @Override
-    public PlayerColour getColour() {
-        return colour;
-    }
-
-    @Override
-    public String toString() {
-        return colour.toString() + " " + type.toString();
+        super(PieceType.PAWN, colour);
     }
 
     @Override
@@ -45,10 +24,10 @@ public class Pawn implements Piece {
         Coordinates next = from.plus(direction, 0);
 
         Stream.of(next.plus(0, 1), next.plus(0, -1))
-                .filter(c -> board.onBoard(c) && board.canTake(c, colour))
+                .filter(c -> board.isCoordinateOffBoard(c) && board.canTake(c, colour))
                 .forEach(c -> allowedMoves.add(new Move(from, c)));
 
-        if (!board.onBoard(next) || board.get(next) != null) {
+        if (board.isCoordinateOffBoard(next) || board.get(next) != null) {
             return allowedMoves;
         }
 
