@@ -4,7 +4,7 @@ public class Maths {
     public final static double PI = 3.14;
 
     public static double max(double a, double b){
-        return Math.max(a, b);
+        return a > b ? a : b;
     }
 
     public static double round(double i) {

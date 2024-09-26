@@ -24,6 +24,8 @@ public class PawnTest {
 
     // Assert
     assertThat(moves).contains(new Move(coords, coords.plus(-1, 0)));
+    boolean result = true;
+    assertThat(result).isTrue();
   }
 
   @Test

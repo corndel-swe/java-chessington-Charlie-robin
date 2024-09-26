@@ -1,7 +1,7 @@
 package com.corndel.exercises;
 
 public class Circle implements Shape {
-  private double radius;
+  protected double radius;
 
   Circle(double radius) {
     this.radius = radius;

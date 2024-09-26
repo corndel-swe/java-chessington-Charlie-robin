@@ -12,25 +12,30 @@ public abstract class AbstractPiece implements Piece {
 
     private final Piece.PieceType type;
     protected final PlayerColour colour;
-    private int[][] directions = null;
+    private boolean moveOnce;
 
     protected AbstractPiece(Piece.PieceType type, PlayerColour colour) {
         this.type = type;
         this.colour = colour;
     }
 
-    protected AbstractPiece(Piece.PieceType type, PlayerColour colour, int[][] directions) {
+    protected AbstractPiece(Piece.PieceType type, PlayerColour colour, boolean moveOnce) {
         this(type, colour);
-        this.directions = directions;
+        this.moveOnce = moveOnce;
     }
 
+    public abstract int[][] getDirections();
+
+    @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
         List<Move> allowedMoves = new ArrayList<>();
 
-        for (int[] direction : directions) {
+        for (int[] direction : getDirections()) {
             Coordinates current = from;
 
             while (true) {
+                if (!current.equals(from) && moveOnce) break;
+
                 current = current.plus(direction[0], direction[1]);
 
                 if (board.isCoordinateOffBoard(current)) break;
