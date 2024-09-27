@@ -1,25 +1,11 @@
 package com.corndel.exercises;
 
-public class Square {
-  private double side;
+public class Square extends Rectangle {
 
   public Square(double side) {
-    this.side = side;
+    super(side, side);
+    Circle circle = new Circle(2);
+    circle.radius = 55;
   }
 
-  public double getArea() {
-    return this.side * this.side;
-  }
-
-  public double getPerimeter() {
-    return 4 * this.side;
-  }
-
-  public double getWidth() {
-    return this.side;
-  }
-
-  public double getHeight() {
-    return this.side;
-  }
 }
